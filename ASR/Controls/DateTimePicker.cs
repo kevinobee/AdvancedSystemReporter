@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sitecore;
-using Sitecore.Diagnostics;
+﻿using Sitecore;
 
 namespace ASR.Controls
 {
@@ -20,15 +15,12 @@ namespace ASR.Controls
 
         public DateTimePicker():base()
         {
-            Format = "MM/dd/yyyy";
+            Format = "yyyyMMddTHHmmss";
         }
 
         protected override void DoRender(System.Web.UI.HtmlTextWriter output)
         {
-            output.Write("<div style='display:inline;float:left'>");
             base.DoRender(output);
-            output.Write("</div>");
-
         }
         public override string Value
         {
