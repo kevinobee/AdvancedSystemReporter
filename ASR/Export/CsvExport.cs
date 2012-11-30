@@ -8,9 +8,21 @@ namespace ASR.Export
 {
     public class CsvExport
     {
+        private Report _report;
+
         public char Separator
         {
             get { return ','; }
+        }
+
+        public CsvExport()
+        {
+            this._report = Current.Context.Report;
+        }
+
+        public CsvExport(Report report)
+        {
+            this._report = report;
         }
 
         public string Save(string prefix, string extension)
@@ -21,7 +33,7 @@ namespace ASR.Export
                 Sitecore.IO.FileUtil.GetWorkFilename(Sitecore.Configuration.Settings.TempFolderPath, prefix, extension);
             
             HashSet<string> headers = new HashSet<string>();
-            IEnumerable<DisplayElement> results = Current.Context.Report.GetResultElements();
+            IEnumerable<DisplayElement> results = _report.GetResultElements();
             foreach (var dElement in results)
             {
                 foreach (var header in dElement.GetColumnNames())

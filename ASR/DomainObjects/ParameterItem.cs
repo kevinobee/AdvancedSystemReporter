@@ -31,6 +31,9 @@ namespace ASR.DomainObjects
 		{
 			get
 			{
+                var firstDayOfPreviousMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1);
+                var lastDayOfPreviousMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 23, 59, 59).AddDays(-1);
+
 				string _replacedValue = DefaultValue;
 				if (!string.IsNullOrEmpty(_replacedValue))
 				{
@@ -41,6 +44,10 @@ namespace ASR.DomainObjects
 					_replacedValue = _replacedValue.Replace("$sc_today", DateTime.Today.ToString("yyyyMMddTHHmmss"));
 					_replacedValue = _replacedValue.Replace("$sc_now", DateTime.Now.ToString("yyyyMMddTHHmmss"));
 					_replacedValue = _replacedValue.Replace("$sc_currentuser", Sitecore.Context.User == null ? string.Empty : Sitecore.Context.User.Name);
+                    _replacedValue = _replacedValue.Replace("$sc_firstdayofpreviousmonth",
+                                                            firstDayOfPreviousMonth.ToString("yyyyMMddTHHmmss"));
+                    _replacedValue = _replacedValue.Replace("$sc_lastdayofpreviousmonth",
+                                                            lastDayOfPreviousMonth.ToString("yyyyMMddTHHmmss"));
 				}
 				return _replacedValue;
 			}
@@ -127,10 +134,7 @@ namespace ASR.DomainObjects
                 var dtPicker = new ASR.Controls.DateTimePicker();
                 dtPicker.Style.Add("float", "left");
                 dtPicker.ID = Sitecore.Web.UI.HtmlControls.Control.GetUniqueID("input");
-                dtPicker.ShowTime = false;
                 dtPicker.Click = "datepicker" + ":" + dtPicker.ID;
-                dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.Display, "inline");
-                dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.VerticalAlign, "middle");
                 if (this.Parameters["Format"] != null) dtPicker.Format = this.Parameters["Format"];
                 input = dtPicker;
             }
